@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block contents %}
+<body>
+    <p class="bg-primary text-white">
+        <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
+        {{ user.userName }} 님
+        (학교idx: {{ user.schoolIdx }})
+    </p>
+
+    <div style="margin: 0 auto; width: 300px; display: flex; justify-content: space-evenly;">
+        <div class="page-section-heading text-center" style="width: 120px ; font-size: 25px; color: #1abc9c;" ><a href="{% url 'my_chat_imbuyer' %}"  style="color: #1abc9c; text-decoration: none;">구매 채팅</a></div>
+        <div class="page-section-heading" style="color: #1abc9c; font-size: large;">|</div>
+        <div class="page-section-heading text-center text-uppercase text-white" style="font-size: 25px; width: 120px ; color:#bfc2c178;"><a href="{% url 'my_chat_imseller' %}" style="color: #9e9e9e; text-decoration: none;">판매 채팅</a></div>
+    </div>
+
+    <div id="app">
+        
+    </div>
+    <br>
+    <br>
+    {% for chatroom in chatroom_list %}
+    <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
+        <div style="display: flex;">
+            <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    
+                <a class="chatA">채팅방 입장</a><br>
+                   
+                <h7>게시글: {{ chatroom.postIdx }}</h7><br>
+                <h7>판매자: {{ chatroom.sellerIdx }}</h7><br>
+                <h7>구매자: {{ chatroom.buyerIdx }}</h7><br>
+                <h7>생성일: {{ chatroom.createdDate }}  </h7><br>
+            </div>
+        </div>
+    </div>
+    </br>
+    {% endfor %}
+    <!-- Footer-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;" id="mainNav">
+        <div class="container" style="background-color: #e5fff3;">
+            
+
+            <div class="col-lg-4" style="background-color: #e5fff3; ">
+                <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid" src="../../static/assets/Plus.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
+            </div>
+        </div>
+    </nav>
+    <script>
+        var chatroom_info = {{ chatroom_info }}; // 2-2-3_1-1-3
+        var a = chatroom_info.split('/');
+        let s=document.querySelectorAll(".chatA");
+        console.log(s);
+        for(let i=0;i<s.length;i++){
+            s[i].setAttribute("href","http://127.0.0.1:8000/chat/"+a[i])
+        }
+        </script>
+</body>
+{% endblock %}
